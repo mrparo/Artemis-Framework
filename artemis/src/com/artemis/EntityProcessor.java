@@ -13,7 +13,7 @@ import com.artemis.utils.ImmutableBag;
  * @author MrParo
  *
  */
-public abstract class RawSystem extends EntitySystem
+public abstract class EntityProcessor extends EntitySystem
 {
 	private Bag<Entity> actives;
 
@@ -27,7 +27,7 @@ public abstract class RawSystem extends EntitySystem
 	 * Creates an entity system that uses the specified aspect as a matcher against entities.
 	 * @param aspect to match against entities
 	 */
-	public RawSystem(Aspect aspect) {
+	public EntityProcessor(Aspect aspect) {
 		actives = new Bag<Entity>();
 		allSet = aspect.getAllSet();
 		exclusionSet = aspect.getExclusionSet();

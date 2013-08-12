@@ -244,7 +244,7 @@ public final class Entity {
 	 * This UUID is unique per entity (re-used entities get a new UUID).
 	 * @return uuid instance for this entity.
 	 */
-	public UUID getUuid() {
+	public UUID getUUID() {
 		return uuid;
 	}
 

@@ -2,7 +2,7 @@ package com.artemis.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
-import com.artemis.RawSystem;
+import com.artemis.EntityProcessor;
 import com.artemis.utils.ImmutableBag;
 
 /**
@@ -14,7 +14,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class IntervalEntityProcessingSystem extends RawSystem {
+public abstract class IntervalEntityProcessingSystem extends EntityProcessor {
         /** The interval. */
         private float interval;
         
