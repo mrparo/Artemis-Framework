@@ -2,7 +2,7 @@ package com.artemis.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
-import com.artemis.EntityProcessor;
+import com.artemis.RawSystem;
 import com.artemis.utils.ImmutableBag;
 
 /**
@@ -13,7 +13,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class VoidEntitySystem extends EntityProcessor {
+public abstract class VoidEntitySystem extends RawSystem {
 
 	public VoidEntitySystem() {
 		super(Aspect.getEmpty());
