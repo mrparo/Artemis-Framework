@@ -2,6 +2,7 @@ package com.artemis.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
+import com.artemis.EntityProcessor;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 
@@ -30,7 +31,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class DelayedEntityProcessingSystem extends EntitySystem {
+public abstract class DelayedEntityProcessingSystem extends EntityProcessor {
 	private float delay;
 	private boolean running;
 	private float acc;
