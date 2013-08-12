@@ -12,7 +12,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class VoidEntitySystem extends RawSystem {
+public abstract class VoidEntitySystem extends RawEntity {
 
 	public VoidEntitySystem() {
 		super(Aspect.getEmpty());
