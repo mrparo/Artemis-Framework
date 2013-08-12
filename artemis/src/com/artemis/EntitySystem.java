@@ -39,7 +39,7 @@ public abstract class EntitySystem implements EntityObserver, Processable {
         
 
         /**
-         * Override to implement code that gets executed when processors are initialized.
+         * Override to implement code that gets executed when systems are initialized.
          */
         protected abstract void initialize();
 
@@ -50,7 +50,7 @@ public abstract class EntitySystem implements EntityObserver, Processable {
         public abstract void process();
 
         /**
-         * Will check if the entity is of interest to this processor.
+         * Will check if the entity is of interest to this system.
          * @param e entity to check
          */
         protected abstract void check(Entity e);
@@ -94,8 +94,8 @@ public abstract class EntitySystem implements EntityObserver, Processable {
         }
         
         /**
-         * Used to generate a unique bit for each processor.
-         * Only used internally in EntityProcessor.
+         * Used to generate a unique bit for each system.
+         * Only used internally in EntitySystem.
          */
         private static class SystemIndexManager {
                 private static int INDEX = 0;
