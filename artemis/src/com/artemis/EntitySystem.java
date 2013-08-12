@@ -2,6 +2,7 @@ package com.artemis;
 import java.util.HashMap;
 
 import com.artemis.interfaces.EntityObserver;
+import com.artemis.interfaces.Processable;
 
 /**
  * Barebone entity system. Has no {@link Entity} handling logic within it. It is recommended that you use the other provided
@@ -10,7 +11,7 @@ import com.artemis.interfaces.EntityObserver;
  * @author MrParo
  *
  */
-public abstract class EntitySystem implements EntityObserver {
+public abstract class EntitySystem implements EntityObserver, Processable {
         private final int systemIndex;
         
         protected World world;
@@ -45,6 +46,7 @@ public abstract class EntitySystem implements EntityObserver {
         /**
          * Override to implement code that gets executed during processing.
          */
+        @Override
         public abstract void process();
 
         /**
