@@ -22,14 +22,15 @@ public abstract class IntervalEntityProcessingSystem extends IntervalEntitySyste
 	/**
 	 * Process a entity this system is interested in.
 	 * @param e the entity to process.
+	 * @param delta the delta time
 	 */
-	protected abstract void process(Entity e);
+	protected abstract void process(Entity e, float delta);
 
 	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0, s = entities.size(); s > i; i++) {
-			process(entities.get(i));
+			process(entities.get(i), interval);
 		}
 	}
 
