@@ -1,7 +1,7 @@
 package com.artemis.interfaces;
 
 /**
- * Any class that needs to have a render component should implement this interface.
+ * Any class that needs to have a render method should implement this interface.
  * 
  * @author Paro
  *
