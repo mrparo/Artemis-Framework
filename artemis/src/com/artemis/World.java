@@ -245,7 +245,7 @@ public class World {
 	 * Will add a system to this world.
 	 *  
 	 * @param system the system to add.
-	 * @param passive wether or not this system will be processed by World.process()
+	 * @param passive whether or not this system will be processed by World.process()
 	 * @return the added system.
 	 */
 	public <T extends EntitySystem> T setSystem(T system, boolean passive) {
