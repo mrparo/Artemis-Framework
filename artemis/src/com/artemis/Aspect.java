@@ -36,15 +36,15 @@ public class Aspect {
 		this.oneSet = new BitSet();
 	}
 	
-	protected BitSet getAllSet() {
+	public BitSet getAllSet() {
 		return allSet;
 	}
 	
-	protected BitSet getExclusionSet() {
+	public BitSet getExclusionSet() {
 		return exclusionSet;
 	}
 	
-	protected BitSet getOneSet() {
+	public BitSet getOneSet() {
 		return oneSet;
 	}
 	
