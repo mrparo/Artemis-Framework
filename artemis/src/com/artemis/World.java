@@ -17,14 +17,14 @@ import com.artemis.utils.ImmutableBag;
  * 
  * It is also important to set the delta each game loop iteration, and initialize before game loop.
  * 
- * @author Arni Arent
+ * @author MrParo
  * 
  */
 public class World {
 	private EntityManager em;
 	private ComponentManager cm;
 
-	public float delta;
+	private float delta;
 	private Bag<Entity> added;
 	private Bag<Entity> changed;
 	private Bag<Entity> deleted;
@@ -36,13 +36,19 @@ public class World {
 	
 	private Map<Class<?>, EntitySystem> systems;
 	private Bag<EntitySystem> systemsBag;
-
+	
+	private Map< Class<?>, Renderer > renderers;
+	private Bag<Renderer> rendererBag;
+	
 	public World() {
 		managers = new HashMap<Class<? extends Manager>, Manager>();
 		managersBag = new Bag<Manager>();
 		
 		systems = new HashMap<Class<?>, EntitySystem>();
 		systemsBag = new Bag<EntitySystem>();
+		
+		renderers = new HashMap<Class<?>, Renderer>();
+		rendererBag = new Bag<Renderer>();
 
 		added = new Bag<Entity>();
 		changed = new Bag<Entity>();
@@ -92,8 +98,41 @@ public class World {
 		return cm;
 	}
 	
+	/**
+	 * Add a renderer into the world that will be processed by World.render()
+	 * 
+	 * @param renderer renderer to be added
+	 * @return the added renderer
+	 */
+	public <T extends Renderer> T setRenderer(T renderer)
+	{
+	        renderers.put(renderer.getClass(), renderer);
+	        rendererBag.add(renderer);
+	        renderer.setWorld(this);
+	        return renderer;
+	}
 	
+	/**
+	 * Deletes the renderer from the world
+	 * 
+	 * @param renderer the renderer to be deleted
+	 */
+	public void deleteRenderer(Renderer renderer)
+	{
+	        renderers.remove( renderer.getClass() );
+	        rendererBag.remove( renderer );
+	}
 	
+	/**
+         * Retrieve a renderer for specified renderer type.
+         * 
+         * @param type type of renderer.
+         * @return instance of the renderer in this world.
+         */
+        public <T extends Renderer> T getRenderer(Class<T> type)
+        {
+                return type.cast(renderers.get(type));
+        }
 
 	/**
 	 * Add a manager into this world. It can be retrieved later.
@@ -260,6 +299,16 @@ public class World {
 	}
 	
 	/**
+         * Retrieve a system for specified system type.
+         * 
+         * @param type type of system.
+         * @return instance of the system in this world.
+         */
+        public <T extends EntitySystem> T getSystem(Class<T> type) {
+                return type.cast(systems.get(type));
+        }
+	
+	/**
 	 * Removed the specified system from the world.
 	 * @param system to be deleted from world.
 	 */
@@ -280,16 +329,14 @@ public class World {
 		}
 	}
 	
-	/**
-	 * Retrieve a system for specified system type.
-	 * 
-	 * @param type type of system.
-	 * @return instance of the system in this world.
-	 */
-	public <T extends EntitySystem> T getSystem(Class<T> type) {
-		return type.cast(systems.get(type));
+	private void notifyRenderers(Performer performer, Entity e)
+	{
+	        for(int q = 0; rendererBag.size() > q; q++)
+	        {
+	                performer.perform( rendererBag.get( q ), e );
+	        }
 	}
-
+	
 	
 	/**
 	 * Performs an action on each entity.
@@ -302,6 +349,7 @@ public class World {
 				Entity e = entities.get(i);
 				notifyManagers(performer, e);
 				notifySystems(performer, e);
+				notifyRenderers(performer, e);
 			}
 			entities.clear();
 		}
@@ -357,6 +405,17 @@ public class World {
 		}
 	}
 	
+	/**
+	 * Render all {@link Renderer}'s added to the world.
+	 */
+	public void render()
+	{
+	        for(int i = 0; rendererBag.size() > i; i++)
+	        {
+	                Renderer renderer = rendererBag.get( i );
+	                renderer.render();
+	        }
+	}
 
 	/**
 	 * Retrieves a ComponentMapper instance for fast retrieval of components from entities.
