@@ -2,23 +2,41 @@ package com.artemis.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
+import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 
 /**
- * If you need to process entities at a certain interval then use this.
- * A typical usage would be to regenerate ammo or health at certain intervals, no need
- * to do that every game loop, but perhaps every 100 ms. or every second.
+ * A system that processes entities at a interval in milliseconds.
+ * A typical usage would be a collision system or physics system.
+ * Other usage would be to regenerate ammo or health at certain intervals, no need
+ * to do that every game loop, but perhaps every 100 ms or every second.
  * 
  * @author Arni Arent
  *
  */
-public abstract class IntervalEntityProcessingSystem extends IntervalEntitySystem {
+public abstract class IntervalEntityProcessingSystem extends EntitySystem {
+        /** The interval. */
+        private float interval;
+        
+        /** The accumulator. */
+        private float acc;
 
+        
 	public IntervalEntityProcessingSystem(Aspect aspect, float interval) {
-		super(aspect, interval);
+		super(aspect);
+		this.interval = interval;
 	}
-
-
+	
+        @Override
+        protected boolean checkProcessing() {
+                acc += world.getDelta();
+                if(acc >= interval) {
+                        acc -= interval;
+                        return true;
+                }
+                return false;
+        }
+	
 	/**
 	 * Process a entity this system is interested in.
 	 * @param e the entity to process.
@@ -35,3 +53,4 @@ public abstract class IntervalEntityProcessingSystem extends IntervalEntitySyste
 	}
 
 }
+
