@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.artemis.annotations.Mapper;
+import com.artemis.interfaces.EntityObserver;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
 

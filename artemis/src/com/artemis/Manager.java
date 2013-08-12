@@ -1,5 +1,7 @@
 package com.artemis;
 
+import com.artemis.interfaces.EntityObserver;
+
 
 /**
  * Manager.

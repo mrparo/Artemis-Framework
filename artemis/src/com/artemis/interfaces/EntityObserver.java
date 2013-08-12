@@ -1,4 +1,6 @@
-package com.artemis;
+package com.artemis.interfaces;
+
+import com.artemis.Entity;
 
 public interface EntityObserver {
 	
