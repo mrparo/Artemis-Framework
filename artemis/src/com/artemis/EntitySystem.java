@@ -2,7 +2,7 @@ package com.artemis;
 import java.util.HashMap;
 
 /**
- * Barebone entity system. It is recommended that you use the other provided
+ * Barebone entity system. Has no {@link Entity} handling logic within it. It is recommended that you use the other provided
  * entity system implementations.
  * 
  * @author MrParo
