@@ -13,9 +13,9 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class VoidEntitySystem extends EntityProcessor {
+public abstract class VoidEntityProcessingSystem extends EntityProcessor {
 
-	public VoidEntitySystem() {
+	public VoidEntityProcessingSystem() {
 		super(Aspect.getEmpty());
 	}
 
