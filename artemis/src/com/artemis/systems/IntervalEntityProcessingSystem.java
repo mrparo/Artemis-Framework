@@ -46,7 +46,7 @@ public abstract class IntervalEntityProcessingSystem extends EntitySystem {
 
 	
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected final void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0, s = entities.size(); s > i; i++) {
 			process(entities.get(i), interval);
 		}
