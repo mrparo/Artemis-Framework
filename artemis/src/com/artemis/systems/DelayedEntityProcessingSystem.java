@@ -30,7 +30,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class DelayedEntityProcessingSystem extends RawEntity {
+public abstract class DelayedEntityProcessingSystem extends RawSystem {
 	private float delay;
 	private boolean running;
 	private float acc;

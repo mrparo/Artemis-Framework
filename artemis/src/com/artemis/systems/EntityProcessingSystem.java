@@ -11,7 +11,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class EntityProcessingSystem extends RawEntity {
+public abstract class EntityProcessingSystem extends RawSystem {
 	
 	public EntityProcessingSystem(Aspect aspect) {
 		super(aspect);

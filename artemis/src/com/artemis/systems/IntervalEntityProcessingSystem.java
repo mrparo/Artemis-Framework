@@ -13,7 +13,7 @@ import com.artemis.utils.ImmutableBag;
  * @author Arni Arent
  *
  */
-public abstract class IntervalEntityProcessingSystem extends RawEntity {
+public abstract class IntervalEntityProcessingSystem extends RawSystem {
         /** The interval. */
         private float interval;
         
