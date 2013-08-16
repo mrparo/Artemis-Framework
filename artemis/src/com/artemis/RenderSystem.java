@@ -1,52 +1,68 @@
 package com.artemis;
 
+import java.util.HashMap;
+
 import com.artemis.interfaces.EntityObserver;
 import com.artemis.interfaces.Renderable;
+import com.artemis.render.Renderer;
 
-public class RenderSystem implements EntityObserver, Renderable
+public abstract class RenderSystem implements EntityObserver, Renderable
 {
+        private final int systemIndex;
         
+        private World world;
         
-        @Override
-        public void added( Entity e )
-        {
-                // TODO Auto-generated method stub
-                
-        }
+        private final Renderer renderer;
 
-        @Override
-        public void changed( Entity e )
+        public RenderSystem(Renderer renderer)
         {
-                // TODO Auto-generated method stub
-                
-        }
-
-        @Override
-        public void deleted( Entity e )
-        {
-                // TODO Auto-generated method stub
-                
-        }
-
-        @Override
-        public void enabled( Entity e )
-        {
-                // TODO Auto-generated method stub
-                
-        }
-
-        @Override
-        public void disabled( Entity e )
-        {
-                // TODO Auto-generated method stub
-                
-        }
-
-        @Override
-        public void render()
-        {
-                // TODO Auto-generated method stub
-                
+                this.renderer = renderer;
+                systemIndex = SystemIndexManager.getIndexFor(this.getClass());
         }
         
+        protected final void setWorld(World world)
+        {
+                this.world = world;
+        }
+        
+        @Override
+        public abstract void added( Entity e );
+
+        @Override
+        public abstract void changed( Entity e );
+
+        @Override
+        public abstract void deleted( Entity e );
+
+        @Override
+        public abstract void enabled( Entity e );
+
+        @Override
+        public abstract void disabled( Entity e );
+
+        @Override
+        public abstract void render();
+        
+        protected final int getSystemIndex()
+        {
+                return this.systemIndex;
+        }
+        
+        /**
+         * Used to generate a unique bit for each system.
+         * Only used internally in EntitySystem.
+         */
+        private static class SystemIndexManager {
+                private static int INDEX = 0;
+                private static HashMap<Class<? extends RenderSystem>, Integer> indices = new HashMap<Class<? extends RenderSystem>, Integer>();
+                
+                private static int getIndexFor(Class<? extends RenderSystem> es){
+                        Integer index = indices.get(es);
+                        if(index == null) {
+                                index = INDEX++;
+                                indices.put(es, index);
+                        }
+                        return index;
+                }
+        }
 }

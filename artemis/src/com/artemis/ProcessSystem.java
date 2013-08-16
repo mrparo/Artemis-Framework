@@ -11,7 +11,7 @@ import com.artemis.interfaces.Processable;
  * @author MrParo
  *
  */
-public abstract class EntitySystem implements EntityObserver, Processable {
+public abstract class ProcessSystem implements EntityObserver, Processable {
         private final int systemIndex;
         
         protected World world;
@@ -22,7 +22,7 @@ public abstract class EntitySystem implements EntityObserver, Processable {
          * 
          * 
          */
-        public EntitySystem()
+        public ProcessSystem()
         {
                 systemIndex = SystemIndexManager.getIndexFor(this.getClass());
         }
@@ -99,9 +99,9 @@ public abstract class EntitySystem implements EntityObserver, Processable {
          */
         private static class SystemIndexManager {
                 private static int INDEX = 0;
-                private static HashMap<Class<? extends EntitySystem>, Integer> indices = new HashMap<Class<? extends EntitySystem>, Integer>();
+                private static HashMap<Class<? extends ProcessSystem>, Integer> indices = new HashMap<Class<? extends ProcessSystem>, Integer>();
                 
-                private static int getIndexFor(Class<? extends EntitySystem> es){
+                private static int getIndexFor(Class<? extends ProcessSystem> es){
                         Integer index = indices.get(es);
                         if(index == null) {
                                 index = INDEX++;
@@ -110,5 +110,4 @@ public abstract class EntitySystem implements EntityObserver, Processable {
                         return index;
                 }
         }
-
 }

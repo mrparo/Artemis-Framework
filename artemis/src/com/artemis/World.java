@@ -34,21 +34,21 @@ public class World {
 	private Map<Class<? extends Manager>, Manager> managers;
 	private Bag<Manager> managersBag;
 	
-	private Map<Class<?>, EntitySystem> systems;
-	private Bag<EntitySystem> systemsBag;
+	private Map<Class<?>, ProcessSystem> processes;
+	private Bag<ProcessSystem> processBag;
 	
-	private Map< Class<?>, Renderer > renderers;
-	private Bag<Renderer> rendererBag;
+	private Map< Class<?>, RenderSystem > renderers;
+	private Bag<RenderSystem> rendererBag;
 	
 	public World() {
 		managers = new HashMap<Class<? extends Manager>, Manager>();
 		managersBag = new Bag<Manager>();
 		
-		systems = new HashMap<Class<?>, EntitySystem>();
-		systemsBag = new Bag<EntitySystem>();
+		processes = new HashMap<Class<?>, ProcessSystem>();
+		processBag = new Bag<ProcessSystem>();
 		
-		renderers = new HashMap<Class<?>, Renderer>();
-		rendererBag = new Bag<Renderer>();
+		renderers = new HashMap<Class<?>, RenderSystem>();
+		rendererBag = new Bag<RenderSystem>();
 
 		added = new Bag<Entity>();
 		changed = new Bag<Entity>();
@@ -72,9 +72,9 @@ public class World {
 			managersBag.get(i).initialize();
 		}
 		
-		for (int i = 0; i < systemsBag.size(); i++) {
-			ComponentMapperInitHelper.config(systemsBag.get(i), this);
-			systemsBag.get(i).initialize();
+		for (int i = 0; i < processBag.size(); i++) {
+			ComponentMapperInitHelper.config(processBag.get(i), this);
+			processBag.get(i).initialize();
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class World {
 	 * @param renderer renderer to be added
 	 * @return the added renderer
 	 */
-	public <T extends Renderer> T setRenderer(T renderer)
+	public <T extends RenderSystem> T setRenderSystem(T renderer)
 	{
 	        renderers.put(renderer.getClass(), renderer);
 	        rendererBag.add(renderer);
@@ -117,7 +117,7 @@ public class World {
 	 * 
 	 * @param renderer the renderer to be deleted
 	 */
-	public void deleteRenderer(Renderer renderer)
+	public void deleteRenderSystem(RenderSystem renderer)
 	{
 	        renderers.remove( renderer.getClass() );
 	        rendererBag.remove( renderer );
@@ -129,7 +129,7 @@ public class World {
          * @param type type of renderer.
          * @return instance of the renderer in this world.
          */
-        public <T extends Renderer> T getRenderer(Class<T> type)
+        public <T extends RenderSystem> T getRenderSystem(Class<T> type)
         {
                 return type.cast(renderers.get(type));
         }
@@ -267,8 +267,8 @@ public class World {
 	 * 
 	 * @return all entity systems in world.
 	 */
-	public ImmutableBag<EntitySystem> getSystems() {
-		return systemsBag;
+	public ImmutableBag<ProcessSystem> getProcessSystems() {
+		return processBag;
 	}
 
 	/**
@@ -277,8 +277,8 @@ public class World {
 	 * @param system the system to add.
 	 * @return the added system.
 	 */
-	public <T extends EntitySystem> T setSystem(T system) {
-		return setSystem(system, false);
+	public <T extends ProcessSystem> T setProcessSystem(T system) {
+		return setProcessSystem(system, false);
 	}
 
 	/**
@@ -288,12 +288,12 @@ public class World {
 	 * @param passive whether or not this system will be processed by World.process()
 	 * @return the added system.
 	 */
-	public <T extends EntitySystem> T setSystem(T system, boolean passive) {
+	public <T extends ProcessSystem> T setProcessSystem(T system, boolean passive) {
 		system.setWorld(this);
 		system.setPassive(passive);
 		
-		systems.put(system.getClass(), system);
-		systemsBag.add(system);
+		processes.put(system.getClass(), system);
+		processBag.add(system);
 		
 		return system;
 	}
@@ -304,22 +304,22 @@ public class World {
          * @param type type of system.
          * @return instance of the system in this world.
          */
-        public <T extends EntitySystem> T getSystem(Class<T> type) {
-                return type.cast(systems.get(type));
+        public <T extends ProcessSystem> T getProcessSystem(Class<T> type) {
+                return type.cast(processes.get(type));
         }
 	
 	/**
 	 * Removed the specified system from the world.
 	 * @param system to be deleted from world.
 	 */
-	public void deleteSystem(EntitySystem system) {
-		systems.remove(system.getClass());
-		systemsBag.remove(system);
+	public void deleteProcessSystem(ProcessSystem system) {
+		processes.remove(system.getClass());
+		processBag.remove(system);
 	}
 	
-	private void notifySystems(Performer performer, Entity e) {
-		for(int i = 0, s=systemsBag.size(); s > i; i++) {
-			performer.perform(systemsBag.get(i), e);
+	private void notifyProcessSystems(Performer performer, Entity e) {
+		for(int i = 0, s=processBag.size(); s > i; i++) {
+			performer.perform(processBag.get(i), e);
 		}
 	}
 
@@ -329,7 +329,7 @@ public class World {
 		}
 	}
 	
-	private void notifyRenderers(Performer performer, Entity e)
+	private void notifyRenderSystems(Performer performer, Entity e)
 	{
 	        for(int q = 0; rendererBag.size() > q; q++)
 	        {
@@ -348,8 +348,8 @@ public class World {
 			for (int i = 0; entities.size() > i; i++) {
 				Entity e = entities.get(i);
 				notifyManagers(performer, e);
-				notifySystems(performer, e);
-				notifyRenderers(performer, e);
+				notifyProcessSystems(performer, e);
+				notifyRenderSystems(performer, e);
 			}
 			entities.clear();
 		}
@@ -397,8 +397,8 @@ public class World {
 		
 		cm.clean();
 		
-		for(int i = 0; systemsBag.size() > i; i++) {
-			EntitySystem system = systemsBag.get(i);
+		for(int i = 0; processBag.size() > i; i++) {
+			ProcessSystem system = processBag.get(i);
 			if(!system.isPassive()) {
 				system.process();
 			}
@@ -406,13 +406,13 @@ public class World {
 	}
 	
 	/**
-	 * Render all {@link Renderer}'s added to the world.
+	 * Render all {@link RenderSystem}'s added to the world.
 	 */
 	public void render()
 	{
 	        for(int i = 0; rendererBag.size() > i; i++)
 	        {
-	                Renderer renderer = rendererBag.get( i );
+	                RenderSystem renderer = rendererBag.get( i );
 	                renderer.render();
 	        }
 	}

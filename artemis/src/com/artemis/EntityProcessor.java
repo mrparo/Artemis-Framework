@@ -13,7 +13,7 @@ import com.artemis.utils.ImmutableBag;
  * @author MrParo
  *
  */
-public abstract class EntityProcessor extends EntitySystem
+public abstract class EntityProcessor extends ProcessSystem
 {
 	private Bag<Entity> actives;
 
