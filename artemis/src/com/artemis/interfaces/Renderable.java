@@ -1,4 +1,4 @@
-package com.artemis.systems;
+package com.artemis.interfaces;
 
 public interface Renderable
 {

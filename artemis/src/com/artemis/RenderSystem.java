@@ -3,8 +3,8 @@ package com.artemis;
 import java.util.HashMap;
 
 import com.artemis.interfaces.EntityObserver;
+import com.artemis.interfaces.Renderable;
 import com.artemis.render.Renderer;
-import com.artemis.systems.Renderable;
 
 public abstract class RenderSystem implements EntityObserver, Renderable
 {
