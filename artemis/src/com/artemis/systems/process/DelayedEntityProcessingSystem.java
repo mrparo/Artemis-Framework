@@ -1,4 +1,4 @@
-package com.artemis.systems;
+package com.artemis.systems.process;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;

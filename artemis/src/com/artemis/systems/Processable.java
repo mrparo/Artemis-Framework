@@ -1,4 +1,4 @@
-package com.artemis.interfaces;
+package com.artemis.systems;
 
 /**
  * Any class that needs to have a process method should implement this interface.

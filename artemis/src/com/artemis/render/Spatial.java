@@ -7,7 +7,7 @@ package com.artemis.render;
  * @author Paro
  *
  */
-public interface Drawable
+public interface Spatial
 {
         /**
          * Performs task of drawing onto specified {@link Renderer}.

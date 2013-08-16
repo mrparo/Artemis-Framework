@@ -1,5 +1,5 @@
 /**
- * Contains classes designed specifically to render to the screen.
+ * Contains classes and interfaces for the implementation of {@link Spatial}'s and {@link Renderer}'s.
  * 
  * @author Paro
  *

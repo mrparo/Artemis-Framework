@@ -4,9 +4,9 @@ package com.artemis.render;
 public interface Renderer
 {
         /**
-         * Performs task of drawing {@link Drawable} onto the screen.
+         * Performs task of drawing {@link Spatial} onto the screen.
          * 
-         * @param drawable the Drawable to draw.
+         * @param spatial the Spatial to draw.
          */
-        void draw(Drawable drawable);
+        void draw(Spatial spatial);
 }

@@ -2,7 +2,7 @@ package com.artemis.render;
 
 import com.artemis.interfaces.Disposable;
 
-public interface RenderLayer extends Drawable, Disposable
+public interface RenderLayer extends Spatial, Disposable
 {
         /**
          * Performs initialization.
